@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1096542309644",
+    "project_id": "med-tracker-bbf10",
+    "storage_bucket": "med-tracker-bbf10.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096542309644:android:9e93abe666990fcb1ccd29",
+        "android_client_info": {
+          "package_name": "com.medicinetracker.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtKRRCrlrvzg0jfFDjULeSmNO5t_cQ8tY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
