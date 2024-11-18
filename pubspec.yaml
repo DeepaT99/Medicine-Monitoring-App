@@ -43,6 +43,7 @@ dependencies:
   linear_calender: ^0.0.5
   flutter_svg: ^2.0.14
   rxdart: ^0.28.0
+  provider: ^6.1.2
 
 
 dev_dependencies:

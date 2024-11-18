@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:medicine_tracker/pages/add/new_entry_bloc.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/convert_time.dart';
 import '../../models/medicine_type.dart';
@@ -166,7 +168,7 @@ class _AddNewState extends State<AddNew> {
                   onPressed: () {
                     //add medicine
                     //validations
-                    
+
                   },
                 ),
               ),
@@ -307,9 +309,12 @@ class MedicineTypeColumn extends StatelessWidget {
   final bool isSelected;
   @override
   Widget build(BuildContext context) {
+    final NewEntryBloc newEntryBloc = Provider.of<NewEntryBloc>(context);
     return GestureDetector(
       onTap: () {
         //selected type of medicine
+        newEntryBloc.updateSelectedMedicine(medicineType);
+
       },
       child: Column(
         children: [
