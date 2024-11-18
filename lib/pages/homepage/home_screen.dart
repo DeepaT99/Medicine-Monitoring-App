@@ -67,3 +67,16 @@ class _HomeScreenState extends State<HomeScreen> {
         body: index == 0 ? const MainScreen() : ProfilePage());
   }
 }
+
+class ListItems extends StatelessWidget {
+  const ListItems({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+
+      ],
+    );
+  }
+}
