@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../models/convert_time.dart';
 import '../../models/medicine_type.dart';
 
 class AddNew extends StatefulWidget {
@@ -47,7 +48,7 @@ class _AddNewState extends State<AddNew> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(18.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -65,7 +66,7 @@ class _AddNewState extends State<AddNew> {
                   ),
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             const PanelTitle(
               title: 'Dosage in mg/ml',
@@ -82,9 +83,12 @@ class _AddNewState extends State<AddNew> {
                   ),
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             const PanelTitle(title: 'Medicine Type', isRequired: false),
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: EdgeInsets.only(top: 4),
               child: StreamBuilder(
@@ -122,14 +126,113 @@ class _AddNewState extends State<AddNew> {
                 },
               ),
             ),
+            const SizedBox(
+              height: 25,
+            ),
             const PanelTitle(title: 'Interval Selection', isRequired: true),
+            const SizedBox(
+              height: 5,
+            ),
             const IntervalSelection(),
+            const SizedBox(
+              height: 25,
+            ),
+            const PanelTitle(title: 'Starting Time', isRequired: true),
+            const SizedBox(
+              height: 10,
+            ),
+            const SelectTime(),
+            const SizedBox(
+              height: 25,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 80, right: 80),
+              child: SizedBox(
+                height: 70,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    shape: const StadiumBorder(),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Confirm',
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            color: Theme.of(context).colorScheme.surface,
+                            fontSize: 20,
+                          ),
+                    ),
+                  ),
+                  onPressed: () {
+                    //add medicine
+                    //validations
+                    
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+class SelectTime extends StatefulWidget {
+  const SelectTime({super.key});
+
+  @override
+  State<SelectTime> createState() => _SelectTimeState();
+}
+
+class _SelectTimeState extends State<SelectTime> {
+  TimeOfDay _time = const TimeOfDay(hour: 0, minute: 00);
+  bool _clicked = false;
+
+  Future<TimeOfDay> _selectTime() async {
+    final TimeOfDay? picked =
+        await showTimePicker(context: context, initialTime: _time);
+
+    if (picked != null && picked != _time) {
+      setState(() {
+        _time = picked;
+        _clicked = true;
+
+        //update state via provider here
+      });
+    }
+    return picked!;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 4, left: 20, right: 20),
+        child: TextButton(
+          style: TextButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              shape: const StadiumBorder()),
+          onPressed: () {
+            _selectTime();
+          },
+          child: Center(
+            child: Text(
+              _clicked == false
+                  ? 'Select Time'
+                  : '${convertTime(_time.hour.toString())}:${convertTime(_time.minute.toString())}',
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    color: Theme.of(context).colorScheme.surface,
+                  ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class IntervalSelection extends StatefulWidget {
   const IntervalSelection({super.key});
 
@@ -138,16 +241,58 @@ class IntervalSelection extends StatefulWidget {
 }
 
 class _IntervalSelectionState extends State<IntervalSelection> {
+  final _intervals = [6, 8, 12, 24];
+  var _selected = 0;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Remind me every',
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          DropdownButton(
+            iconEnabledColor: Theme.of(context).colorScheme.primary,
+            dropdownColor: Theme.of(context).colorScheme.surface,
+            hint: _selected == 0
+                ? Text(
+                    'Select an Interval',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  )
+                : null,
+            elevation: 4,
+            value: _selected == 0 ? null : _selected,
+            items: _intervals.map(
+              (int value) {
+                return DropdownMenuItem<int>(
+                  value: value,
+                  child: Text(
+                    value.toString(),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                );
+              },
+            ).toList(),
+            onChanged: (newVal) {
+              setState(
+                () {
+                  _selected = newVal!;
+                },
+              );
+            },
+          ),
+          Text(
+            _selected == 1 ? "hour" : "hours",
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ],
+      ),
     );
   }
 }
-
 
 class MedicineTypeColumn extends StatelessWidget {
   const MedicineTypeColumn(
@@ -237,7 +382,7 @@ class PanelTitle extends StatelessWidget {
               text: title,
               style: TextStyle(
                 fontSize: 16,
-                color: Theme.of(context).colorScheme.tertiary,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
             TextSpan(

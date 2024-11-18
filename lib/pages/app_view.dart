@@ -15,8 +15,8 @@ class MyAppView extends StatelessWidget {
           surface: Color(0xFFE9E9E9),
           onSurface: Colors.black,
           primary: Color(0xFF201E45),
-          secondary: Color(0xFFC4ECB0),
-          tertiary: Color(0xFF505258),
+          secondary: Color(0xFF505258),
+          tertiary: Color(0xFFC4ECB0),
           outline: Color(0xFF564966),
         ),
         appBarTheme: AppBarTheme(
@@ -32,12 +32,17 @@ class MyAppView extends StatelessWidget {
             color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.w500,
           ),
-          headlineSmall: TextStyle(
+          headlineSmall: const TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.w800,
           ),
+          bodySmall:  TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Theme.of(context).colorScheme.primary,
+          ),
           titleSmall: TextStyle(
-            fontSize: 12,
+            fontSize: 16,
             color: Theme.of(context).colorScheme.outline,
           ),
         ),
