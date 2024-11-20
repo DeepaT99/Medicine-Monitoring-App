@@ -23,7 +23,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
             ExtendedSection(),
             Spacer(),
             Padding(
-              padding:  EdgeInsets.only(left: 40, right: 40, bottom: 40),
+              padding: EdgeInsets.only(left: 40, right: 40, bottom: 40),
               child: SizedBox(
                 height: 70,
                 child: TextButton(
@@ -35,9 +35,9 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                     child: Text(
                       'Delete',
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        color: Theme.of(context).colorScheme.surface,
-                        fontSize: 20,
-                      ),
+                            color: Theme.of(context).colorScheme.surface,
+                            fontSize: 20,
+                          ),
                     ),
                   ),
                   onPressed: () {
@@ -57,17 +57,31 @@ class _MedicineDetailsState extends State<MedicineDetails> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.redAccent,
-          title: Text(
-            'Delete this Medication Reminder?',
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Colors.white,
-                ),
-          ),
+          backgroundColor: Colors.white,
+          contentPadding: const EdgeInsets.only(top: 2),
+          title: Text('Delete this Medication?',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  )),
           actions: [
             TextButton(onPressed: () {
+              Navigator.of(context).pop();
+            }, child: Text('Cancel')),
+            TextButton(
+                onPressed: () {
+                  //bloc to delete medication
 
-            }, child: Text('Cancel'))
+                },
+                child: Text(
+                  'OK',
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.bold,
+                      ),
+                )),
           ],
         );
       },
