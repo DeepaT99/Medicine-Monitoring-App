@@ -56,12 +56,12 @@ class _MyAppViewState extends State<MyAppView> {
             ),
 
             bodySmall: TextStyle(
-              fontSize: 14,
+              fontSize: 16,
               fontWeight: FontWeight.w500,
               color: Theme.of(context).colorScheme.primary,
             ),
             titleSmall: TextStyle(
-              fontSize: 16,
+              fontSize: 18,
               color: Theme.of(context).colorScheme.outline,
             ),
           ),

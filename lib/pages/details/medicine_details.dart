@@ -50,19 +50,23 @@ class ExtendedSection extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: ListView(
         shrinkWrap: true,
+
         children: const [
           ExtendedInfo(
             fieldTitle: 'Medicine Type',
             fieldInfo: 'Pill',
           ),
+          SizedBox(height: 10),
           ExtendedInfo(
             fieldTitle: 'Dose Interval',
             fieldInfo: 'Every 8 hours | 3 times a day',
           ),
+          SizedBox(height: 10),
           ExtendedInfo(
             fieldTitle: 'Start Time',
             fieldInfo: '02:10',
           ),
+          SizedBox(height: 10),
         ],
       ),
     );
@@ -142,12 +146,12 @@ class ExtendedInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 2),
+            padding: const EdgeInsets.only(bottom: 4),
             child: Text(
               fieldTitle,
               style: Theme.of(context).textTheme.titleSmall,
