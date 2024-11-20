@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medicine_tracker/global_bloc.dart';
 import 'package:medicine_tracker/pages/add/new_entry_bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -12,18 +13,18 @@ class MyAppView extends StatefulWidget {
 }
 
 class _MyAppViewState extends State<MyAppView> {
-  NewEntryBloc? newEntryBloc;
+  GlobalBloc? globalBloc;
 
   @override
   void initState() {
-    newEntryBloc = NewEntryBloc();
+    globalBloc = GlobalBloc();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Provider<NewEntryBloc>.value(
-      value: newEntryBloc!,
+    return Provider<GlobalBloc>.value(
+      value: globalBloc!,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Medicine Tracker',

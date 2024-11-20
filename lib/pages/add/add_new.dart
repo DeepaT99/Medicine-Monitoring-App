@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:medicine_tracker/global_bloc.dart';
+import 'package:medicine_tracker/models/errors.dart';
 import 'package:medicine_tracker/pages/add/new_entry_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/convert_time.dart';
+import '../../models/medicine.dart';
 import '../../models/medicine_type.dart';
 
 class AddNew extends StatefulWidget {
@@ -39,6 +44,7 @@ class _AddNewState extends State<AddNew> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalBloc globalBloc = Provider.of<GlobalBloc>(context);
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
@@ -67,7 +73,8 @@ class _AddNewState extends State<AddNew> {
                 maxLength: 20,
                 controller: nameController,
                 textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(border: UnderlineInputBorder()),
+                decoration:
+                    const InputDecoration(border: UnderlineInputBorder()),
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: Colors.grey[800],
                     ),
@@ -84,7 +91,8 @@ class _AddNewState extends State<AddNew> {
                 controller: dosageController,
                 textCapitalization: TextCapitalization.words,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(border: UnderlineInputBorder()),
+                decoration:
+                    const InputDecoration(border: UnderlineInputBorder()),
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: Colors.grey[800],
                     ),
@@ -100,10 +108,9 @@ class _AddNewState extends State<AddNew> {
                 padding: EdgeInsets.only(top: 4),
                 child: StreamBuilder<MedicineType>(
                   //new entry block
-        
+
                   stream: _newEntryBloc.selectedMedicineType,
-                  builder:
-                      (context, snapshot) {
+                  builder: (context, snapshot) {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -111,8 +118,9 @@ class _AddNewState extends State<AddNew> {
                           medicineType: MedicineType.bottle,
                           name: 'Bottle',
                           iconValue: 'lib/assets/icons/medicine.png',
-                          isSelected:
-                              snapshot.data == MedicineType.bottle ? true : false,
+                          isSelected: snapshot.data == MedicineType.bottle
+                              ? true
+                              : false,
                         ),
                         MedicineTypeColumn(
                           medicineType: MedicineType.pill,
@@ -125,8 +133,9 @@ class _AddNewState extends State<AddNew> {
                           medicineType: MedicineType.syringe,
                           name: 'Syringe',
                           iconValue: 'lib/assets/icons/syringe.png',
-                          isSelected:
-                              snapshot.data == MedicineType.syringe ? true : false,
+                          isSelected: snapshot.data == MedicineType.syringe
+                              ? true
+                              : false,
                         ),
                       ],
                     );
@@ -172,9 +181,63 @@ class _AddNewState extends State<AddNew> {
                     ),
                     onPressed: () {
                       //add medicine
-                      //validations
-                      //success page
-        
+                      String? medicineName;
+                      int? dosage;
+                      String medicineType = _newEntryBloc
+                          .selectedMedicineType!.value
+                          .toString()
+                          .substring(13);
+                      int interval = _newEntryBloc.selectIntervals!.value;
+                      String startTime =
+                          _newEntryBloc.selectedTimeOfDay$!.value;
+
+                      //medicine name
+                      if (nameController.text == "") {
+                        _newEntryBloc.submitError(EntryError.nameNull);
+                        return;
+                      }
+                      if (nameController.text != "") {
+                        medicineName = nameController.text;
+                      }
+
+                      //dosage
+                      if (dosageController.text == "") {
+                        dosage = 0;
+                      }
+                      if (dosageController.text != "") {
+                        dosage = int.parse(dosageController.text);
+                      }
+
+                      for (var medicine in globalBloc.medicineList$!.value) {
+                        if (medicineName == medicine.medicineName) {
+                          _newEntryBloc.submitError(EntryError.nameDuplicate);
+                          return;
+                        }
+                      }
+                      if (_newEntryBloc.selectIntervals!.value == 0) {
+                        _newEntryBloc.submitError(EntryError.interval);
+                        return;
+                      }
+                      if (_newEntryBloc.selectedTimeOfDay$!.value == 'None') {
+                        _newEntryBloc.submitError(EntryError.startTime);
+                        return;
+                      }
+                      List<int> intIDs =
+                          makeIDs(24 / _newEntryBloc.selectIntervals!.value);
+                      List<String> notificationIDs =
+                          intIDs.map((i) => i.toString()).toList();
+
+                      Medicine newEntryMedicine = Medicine(
+                          notificationIDs: notificationIDs,
+                          medicineName: medicineName,
+                          dosage: dosage,
+                          medicineType: medicineType,
+                          interval: interval,
+                          startTime: startTime);
+                      //update medicine list
+                      globalBloc.updateMedicineList(newEntryMedicine);
+
+                      //schedule notification
                     },
                   ),
                 ),
@@ -184,6 +247,15 @@ class _AddNewState extends State<AddNew> {
         ),
       ),
     );
+  }
+
+  List<int> makeIDs(double n) {
+    var rng = Random();
+    List<int> ids = [];
+    for (int i = 0; i < n; i++) {
+      ids.add(rng.nextInt(1000000000));
+    }
+    return ids;
   }
 }
 
@@ -321,7 +393,6 @@ class MedicineTypeColumn extends StatelessWidget {
       onTap: () {
         //selected type of medicine
         newEntryBloc.updateSelectedMedicine(medicineType);
-
       },
       child: Column(
         children: [

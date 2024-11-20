@@ -11,9 +11,9 @@ class ListItems extends StatelessWidget {
       scrollDirection: Axis.vertical,
       itemCount: 5,
       itemBuilder: (context, index) {
+
         return const MedicineCard();
       },
-
     );
   }
 }
@@ -28,15 +28,16 @@ class MedicineCard extends StatelessWidget {
       splashColor: Colors.grey,
       onTap: () {
         //goto details activity
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> MedicineDetails()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => MedicineDetails()));
       },
-
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Container(
           height: 100,
           decoration: BoxDecoration(
             color: Colors.white,
+            boxShadow: kElevationToShadow[1],
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(

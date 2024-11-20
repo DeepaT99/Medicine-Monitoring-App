@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medicine_tracker/pages/app.dart';
+
+import 'package:medicine_tracker/pages/app_view.dart';
 import 'package:medicine_tracker/pages/login_pages/auth_page.dart';
 import 'pages/login_pages/login_page.dart';
 //import Firebase
@@ -15,7 +16,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(const MyAppView());
 }
 
 
