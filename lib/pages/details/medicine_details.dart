@@ -23,21 +23,55 @@ class _MedicineDetailsState extends State<MedicineDetails> {
             ExtendedSection(),
             Spacer(),
             Padding(
-              padding: EdgeInsets.only(bottom: 50.0),
-              child: MyButton(
-                  onTap: () {
-                    //open alert dialog
+              padding:  EdgeInsets.only(left: 40, right: 40, bottom: 40),
+              child: SizedBox(
+                height: 70,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    shape: const StadiumBorder(),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Delete',
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        color: Theme.of(context).colorScheme.surface,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
                     openAlertBox(context);
                   },
-                  text: 'Delete'),
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
   }
-  openAlertBox(BuildContext context){
 
+  openAlertBox(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.redAccent,
+          title: Text(
+            'Delete this Medication Reminder?',
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Colors.white,
+                ),
+          ),
+          actions: [
+            TextButton(onPressed: () {
+
+            }, child: Text('Cancel'))
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -50,7 +84,6 @@ class ExtendedSection extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: ListView(
         shrinkWrap: true,
-
         children: const [
           ExtendedInfo(
             fieldTitle: 'Medicine Type',
