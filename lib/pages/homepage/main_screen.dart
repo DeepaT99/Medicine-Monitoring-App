@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linear_calender/linear_calender.dart';
 
+import '../../models/medicine_card.dart';
+
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
@@ -72,9 +74,11 @@ class MainScreen extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
+            Flexible(child: ListItems(),)
           ],
         ),
       ),
     );
   }
 }
+
