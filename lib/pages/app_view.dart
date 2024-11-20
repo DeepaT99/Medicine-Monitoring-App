@@ -34,7 +34,7 @@ class _MyAppViewState extends State<MyAppView> {
             primary: Color(0xFF201E45),
             secondary: Color(0xFF505258),
             tertiary: Color(0xFFC4ECB0),
-            outline: Color(0xFF564966),
+            outline: Color(0xFF292938),
           ),
           appBarTheme: AppBarTheme(
             backgroundColor: const Color(0xFFE9E9E9),
@@ -49,9 +49,14 @@ class _MyAppViewState extends State<MyAppView> {
               color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.w500,
             ),
-            headlineSmall: const TextStyle(
-              fontSize: 25,
+            headlineSmall: TextStyle(
+              fontSize: 24,
               fontWeight: FontWeight.w800,
+              color: Colors.grey[800],
+            ),
+            titleMedium: TextStyle(
+              fontSize: 18,
+              color: Theme.of(context).colorScheme.outline,
             ),
             bodySmall: TextStyle(
               fontSize: 14,

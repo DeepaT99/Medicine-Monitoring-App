@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medicine_tracker/models/medicine_type.dart';
+import 'package:medicine_tracker/pages/details/medicine_details.dart';
 
 class ListItems extends StatelessWidget {
   const ListItems({super.key});
@@ -27,6 +28,7 @@ class MedicineCard extends StatelessWidget {
       splashColor: Colors.grey,
       onTap: () {
         //goto details activity
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> MedicineDetails()));
       },
 
       child: Padding(
@@ -49,6 +51,7 @@ class MedicineCard extends StatelessWidget {
                       'lib/assets/icons/pill.png',
                       height: 75,
                       alignment: Alignment.centerLeft,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                   Column(

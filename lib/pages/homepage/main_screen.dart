@@ -23,9 +23,9 @@ class MainScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your Medicines',
+                          'Stay on track with your health ',
                           style: TextStyle(
-                            fontSize: 25,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
@@ -62,7 +62,7 @@ class MainScreen extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'aaa',
+                  'Your Medications',
                   style: TextStyle(
                     fontSize: 18,
                     color: Theme.of(context).colorScheme.primary,
@@ -74,7 +74,7 @@ class MainScreen extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
-            Flexible(child: ListItems(),)
+            const Flexible(child: ListItems(),)
           ],
         ),
       ),
