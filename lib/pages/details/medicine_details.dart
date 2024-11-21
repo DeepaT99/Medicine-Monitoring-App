@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:medicine_tracker/components/button.dart';
 
 class MedicineDetails extends StatefulWidget {
   const MedicineDetails({super.key});
@@ -19,11 +18,11 @@ class _MedicineDetailsState extends State<MedicineDetails> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            MainSection(),
-            ExtendedSection(),
-            Spacer(),
+            const MainSection(),
+            const ExtendedSection(),
+            const Spacer(),
             Padding(
-              padding: EdgeInsets.only(left: 40, right: 40, bottom: 40),
+              padding: const EdgeInsets.only(left: 40, right: 40, bottom: 40),
               child: SizedBox(
                 height: 70,
                 child: TextButton(
@@ -69,7 +68,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
           actions: [
             TextButton(onPressed: () {
               Navigator.of(context).pop();
-            }, child: Text('Cancel')),
+            }, child: const Text('Cancel')),
             TextButton(
                 onPressed: () {
                   //bloc to delete medication
@@ -170,7 +169,7 @@ class InfoTab extends StatelessWidget {
               fieldTitle,
               style: Theme.of(context).textTheme.titleSmall,
             ),
-            SizedBox(
+            const SizedBox(
               height: 2,
             ),
             Text(

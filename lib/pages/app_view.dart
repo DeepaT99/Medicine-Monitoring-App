@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:medicine_tracker/global_bloc.dart';
-import 'package:medicine_tracker/pages/add/new_entry_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'login_pages/auth_page.dart';

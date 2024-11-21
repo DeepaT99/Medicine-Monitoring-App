@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:medicine_tracker/models/medicine_type.dart';
 import 'package:medicine_tracker/pages/details/medicine_details.dart';
 
 class ListItems extends StatelessWidget {
@@ -29,7 +28,7 @@ class MedicineCard extends StatelessWidget {
       onTap: () {
         //goto details activity
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => MedicineDetails()));
+            MaterialPageRoute(builder: (context) => const MedicineDetails()));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),

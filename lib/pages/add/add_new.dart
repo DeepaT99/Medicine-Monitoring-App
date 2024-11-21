@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:medicine_tracker/global_bloc.dart';
 import 'package:medicine_tracker/models/errors.dart';
 import 'package:medicine_tracker/pages/add/new_entry_bloc.dart';
+import 'package:medicine_tracker/pages/add/success_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/convert_time.dart';
@@ -40,6 +41,7 @@ class _AddNewState extends State<AddNew> {
 
     _newEntryBloc = NewEntryBloc();
     _scaffoldKey = GlobalKey<ScaffoldState>();
+    initializeErrorListen();
   }
 
   @override
@@ -105,7 +107,7 @@ class _AddNewState extends State<AddNew> {
                 height: 10,
               ),
               Padding(
-                padding: EdgeInsets.only(top: 4),
+                padding: const EdgeInsets.only(top: 4),
                 child: StreamBuilder<MedicineType>(
                   //new entry block
 
@@ -238,6 +240,12 @@ class _AddNewState extends State<AddNew> {
                       globalBloc.updateMedicineList(newEntryMedicine);
 
                       //schedule notification
+
+                      //success screen
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SuccessScreen()));
                     },
                   ),
                 ),
@@ -245,6 +253,43 @@ class _AddNewState extends State<AddNew> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void initializeErrorListen() {
+    _newEntryBloc.errorState$!.listen((EntryError error) {
+      switch (error) {
+        case EntryError.nameNull:
+          displayError("Please enter the medicine's name");
+          break;
+
+        case EntryError.nameDuplicate:
+          displayError("Medicine name already exists!");
+          break;
+
+        case EntryError.dosage:
+          displayError("Please enter the dosage required");
+          break;
+
+        case EntryError.interval:
+          displayError("Please select the reminder's interval");
+          break;
+
+        case EntryError.startTime:
+          displayError("Please select the reminder's starting time");
+          break;
+        default:
+      }
+    });
+  }
+
+  void displayError(String error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(error),
+        backgroundColor: Colors.deepOrangeAccent,
+        duration: const Duration(milliseconds: 2000),
       ),
     );
   }
@@ -326,6 +371,7 @@ class _IntervalSelectionState extends State<IntervalSelection> {
   var _selected = 0;
   @override
   Widget build(BuildContext context) {
+    final NewEntryBloc newEntryBloc = Provider.of<NewEntryBloc>(context);
     return Padding(
       padding: const EdgeInsets.only(top: 4),
       child: Row(
@@ -361,6 +407,7 @@ class _IntervalSelectionState extends State<IntervalSelection> {
               setState(
                 () {
                   _selected = newVal!;
+                  newEntryBloc.updateInterval(newVal);
                 },
               );
             },
@@ -396,7 +443,7 @@ class MedicineTypeColumn extends StatelessWidget {
       },
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Container(

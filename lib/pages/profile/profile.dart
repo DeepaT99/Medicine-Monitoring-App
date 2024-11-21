@@ -33,7 +33,7 @@ class ProfilePage extends StatelessWidget {
               shape: BoxShape.circle,
               color: Colors.greenAccent,
             ),
-            child: Icon(
+            child: const Icon(
               Icons.person,
               size: 72,
             ),

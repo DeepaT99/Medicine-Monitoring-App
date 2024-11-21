@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linear_calender/linear_calender.dart';
 
@@ -48,7 +47,7 @@ class MainScreen extends StatelessWidget {
                   selectedBorderColor: Theme.of(context).colorScheme.primary,
                   onChanged: (DateTime value) {
                     debugPrint(
-                        "*****************${value}***************************");
+                        "*****************$value***************************");
                   },
                   height: 80,
                   itemWidth: 55,
