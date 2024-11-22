@@ -5,7 +5,10 @@ import 'package:medicine_tracker/pages/details/medicine_details.dart';
 import 'package:provider/provider.dart';
 
 class MedicineCard extends StatelessWidget {
-  const MedicineCard({super.key, required this.medicine});
+  const MedicineCard({
+    super.key,
+    required this.medicine,
+  });
   final Medicine medicine;
 
   Hero makeIcon() {
@@ -87,15 +90,14 @@ class MedicineCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                        alignment: Alignment.centerLeft,
-                        child: makeIcon()),
+                        alignment: Alignment.centerLeft, child: makeIcon()),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 8,top: 6, bottom: 2),
+                        padding:
+                            const EdgeInsets.only(left: 8, top: 6, bottom: 2),
                         child: Hero(
                           tag: medicine.medicineName!,
                           child: Text(
@@ -128,14 +130,16 @@ class MedicineCard extends StatelessWidget {
                                   : "${medicine!.interval == 24 ? "One time per day" : "${(24 / medicine!.interval!).floor()} times a day"}",
                               overflow: TextOverflow.fade,
                               style: Theme.of(context).textTheme.titleSmall,
-                              ),
+                            ),
                           ],
                         ),
                       ),
                     ],
                   ),
 
-                  //time interval data
+                  //checkbox
+
+
                 ],
               ),
             ],

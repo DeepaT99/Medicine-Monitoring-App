@@ -110,6 +110,7 @@ class MainScreen extends StatelessWidget {
 class ListItems extends StatelessWidget {
   const ListItems({super.key});
 
+  //checkbox was ticked
   @override
   Widget build(BuildContext context) {
     final GlobalBloc globalBloc = Provider.of<GlobalBloc>(context);
@@ -132,7 +133,9 @@ class ListItems extends StatelessWidget {
             scrollDirection: Axis.vertical,
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
-              return MedicineCard(medicine: snapshot.data![index]);
+              return MedicineCard(
+                medicine: snapshot.data![index],
+              );
             },
           );
         }
