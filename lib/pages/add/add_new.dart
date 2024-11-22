@@ -1,15 +1,19 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:medicine_tracker/global_bloc.dart';
 import 'package:medicine_tracker/models/errors.dart';
 import 'package:medicine_tracker/pages/add/new_entry_bloc.dart';
 import 'package:medicine_tracker/pages/add/success_page.dart';
+import 'package:medicine_tracker/pages/homepage/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/convert_time.dart';
 import '../../models/medicine.dart';
 import '../../models/medicine_type.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
 
 class AddNew extends StatefulWidget {
   const AddNew({super.key});
@@ -21,7 +25,7 @@ class AddNew extends StatefulWidget {
 class _AddNewState extends State<AddNew> {
   late TextEditingController nameController;
   late TextEditingController dosageController;
-
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   late NewEntryBloc _newEntryBloc;
   late GlobalKey<ScaffoldState> _scaffoldKey;
 
@@ -38,9 +42,10 @@ class _AddNewState extends State<AddNew> {
     super.initState();
     nameController = TextEditingController();
     dosageController = TextEditingController();
-
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     _newEntryBloc = NewEntryBloc();
     _scaffoldKey = GlobalKey<ScaffoldState>();
+    initializeNotification();
     initializeErrorListen();
   }
 
@@ -117,25 +122,25 @@ class _AddNewState extends State<AddNew> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         MedicineTypeColumn(
-                          medicineType: MedicineType.bottle,
+                          medicineType: MedicineType.Bottle,
                           name: 'Bottle',
                           iconValue: 'lib/assets/icons/medicine.png',
-                          isSelected: snapshot.data == MedicineType.bottle
+                          isSelected: snapshot.data == MedicineType.Bottle
                               ? true
                               : false,
                         ),
                         MedicineTypeColumn(
-                          medicineType: MedicineType.pill,
+                          medicineType: MedicineType.Pill,
                           name: 'Pill',
                           iconValue: 'lib/assets/icons/pill.png',
                           isSelected:
-                              snapshot.data == MedicineType.pill ? true : false,
+                              snapshot.data == MedicineType.Pill ? true : false,
                         ),
                         MedicineTypeColumn(
-                          medicineType: MedicineType.syringe,
+                          medicineType: MedicineType.Syringe,
                           name: 'Syringe',
                           iconValue: 'lib/assets/icons/syringe.png',
-                          isSelected: snapshot.data == MedicineType.syringe
+                          isSelected: snapshot.data == MedicineType.Syringe
                               ? true
                               : false,
                         ),
@@ -147,7 +152,7 @@ class _AddNewState extends State<AddNew> {
               const SizedBox(
                 height: 25,
               ),
-              const PanelTitle(title: 'Interval Selection', isRequired: true),
+              const PanelTitle(title: 'Time between each dosage', isRequired: true),
               const SizedBox(
                 height: 5,
               ),
@@ -155,7 +160,7 @@ class _AddNewState extends State<AddNew> {
               const SizedBox(
                 height: 25,
               ),
-              const PanelTitle(title: 'Starting Time', isRequired: true),
+              const PanelTitle(title: 'Notification Time', isRequired: true),
               const SizedBox(
                 height: 10,
               ),
@@ -240,12 +245,13 @@ class _AddNewState extends State<AddNew> {
                       globalBloc.updateMedicineList(newEntryMedicine);
 
                       //schedule notification
+                      scheduleNotification(newEntryMedicine);
 
                       //success screen
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SuccessScreen()));
+                              builder: (context) => const SuccessScreen()));
                     },
                   ),
                 ),
@@ -302,6 +308,57 @@ class _AddNewState extends State<AddNew> {
     }
     return ids;
   }
+
+
+
+  initializeNotification() async {
+    var initializationSettingsAndroid =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+    tz.initializeTimeZones();
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  Future onSelectNotification(String? payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: $payload');
+    }
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+  }
+
+  Future<void> scheduleNotification(Medicine medicine) async {
+    int interval = medicine.interval!;
+    int hour = int.parse(medicine.startTime!.substring(0, 2));
+    int minute = int.parse(medicine.startTime!.substring(2, 4));
+
+    for (int i = 0; i < (24 / interval).floor(); i++) {
+      int notificationHour = (hour + (interval * i)) % 24;
+
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        int.parse(medicine.notificationIDs![i]),
+        'Reminder: ${medicine.medicineName}',
+        'It\'s time to take your ${medicine.medicineType!.toLowerCase()}!',
+        tz.TZDateTime.now(tz.local)
+            .add(Duration(hours: notificationHour - DateTime.now().hour, minutes: minute - DateTime.now().minute)),
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            'repeatDailyAtTime channel id',
+            'Repeat Daily Notifications',
+            channelDescription: 'Channel for daily medicine reminders',
+            importance: Importance.max,
+            priority: Priority.high,
+          ),
+        ),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.wallClockTime,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+    }
+  }
+
 }
 
 class SelectTime extends StatefulWidget {
@@ -316,6 +373,9 @@ class _SelectTimeState extends State<SelectTime> {
   bool _clicked = false;
 
   Future<TimeOfDay> _selectTime() async {
+    final NewEntryBloc newEntryBloc =
+        Provider.of<NewEntryBloc>(context, listen: false);
+
     final TimeOfDay? picked =
         await showTimePicker(context: context, initialTime: _time);
 
@@ -324,7 +384,9 @@ class _SelectTimeState extends State<SelectTime> {
         _time = picked;
         _clicked = true;
 
-        //update state via provider here
+        //update state via provider
+        newEntryBloc.updateTime(convertTime(_time.hour.toString()) +
+            convertTime(_time.minute.toString()));
       });
     }
     return picked!;
@@ -346,7 +408,7 @@ class _SelectTimeState extends State<SelectTime> {
           child: Center(
             child: Text(
               _clicked == false
-                  ? 'Select Time'
+                  ? 'Pick Time'
                   : '${convertTime(_time.hour.toString())}:${convertTime(_time.minute.toString())}',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Theme.of(context).colorScheme.surface,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:linear_calender/linear_calender.dart';
+import 'package:medicine_tracker/global_bloc.dart';
+import 'package:provider/provider.dart';
 
+import '../../models/medicine.dart';
 import '../../models/medicine_card.dart';
 
 class MainScreen extends StatelessWidget {
@@ -8,6 +11,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalBloc globalBloc = Provider.of<GlobalBloc>(context);
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
@@ -61,19 +65,41 @@ class MainScreen extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Your Medications',
+                  'Your total Medications: ',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 20,
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                StreamBuilder<List<Medicine>>(
+                    stream: globalBloc.medicineList$,
+                    builder: (context, snapshot) {
+                      return Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.only(left: 4),
+                        child: Text(
+                          !snapshot.hasData
+                              ? '0'
+                              : snapshot.data!.length.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontSize: 20,
+                              ),
+                        ),
+                      );
+                    }),
               ],
             ),
             const SizedBox(
               height: 25,
             ),
-            const Flexible(child: ListItems(),)
+            Flexible(
+              child: ListItems(),
+            )
           ],
         ),
       ),
@@ -81,3 +107,36 @@ class MainScreen extends StatelessWidget {
   }
 }
 
+class ListItems extends StatelessWidget {
+  const ListItems({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final GlobalBloc globalBloc = Provider.of<GlobalBloc>(context);
+
+    return StreamBuilder(
+      stream: globalBloc.medicineList$,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          // if no data is saved
+          return Container();
+        } else if (snapshot.data!.isEmpty) {
+          return Center(
+            child: Text(
+              'No Medicine',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+          );
+        } else {
+          return ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              return MedicineCard(medicine: snapshot.data![index]);
+            },
+          );
+        }
+      },
+    );
+  }
+}

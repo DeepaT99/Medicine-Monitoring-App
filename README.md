@@ -1,4 +1,4 @@
-# projecto_demo
+# com.medicinetracker.app
 
 A new Flutter project.
 

@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:medicine_tracker/global_bloc.dart';
+import 'package:medicine_tracker/models/medicine.dart';
+import 'package:provider/provider.dart';
 
 class MedicineDetails extends StatefulWidget {
-  const MedicineDetails({super.key});
+  const MedicineDetails({this.medicine, super.key});
+  final Medicine? medicine;
 
   @override
   State<MedicineDetails> createState() => _MedicineDetailsState();
 }
 
 class _MedicineDetailsState extends State<MedicineDetails> {
+
   @override
   Widget build(BuildContext context) {
+    final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Details'),
@@ -18,8 +24,8 @@ class _MedicineDetailsState extends State<MedicineDetails> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            const MainSection(),
-            const ExtendedSection(),
+            MainSection(medicine: widget.medicine),
+            ExtendedSection(medicine: widget.medicine),
             const Spacer(),
             Padding(
               padding: const EdgeInsets.only(left: 40, right: 40, bottom: 40),
@@ -40,7 +46,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                     ),
                   ),
                   onPressed: () {
-                    openAlertBox(context);
+                    openAlertBox(context, _globalBloc);
                   },
                 ),
               ),
@@ -51,7 +57,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
     );
   }
 
-  openAlertBox(BuildContext context) {
+  openAlertBox(BuildContext context, GlobalBloc _globalBloc) {
     return showDialog(
       context: context,
       builder: (context) {
@@ -66,21 +72,25 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                     color: Theme.of(context).colorScheme.primary,
                   )),
           actions: [
-            TextButton(onPressed: () {
-              Navigator.of(context).pop();
-            }, child: const Text('Cancel')),
             TextButton(
                 onPressed: () {
-                  //bloc to delete medication
-
+                  Navigator.of(context).pop();
                 },
-                child: Text(
-                  'OK',
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Colors.redAccent,
-                        fontWeight: FontWeight.bold,
-                      ),
-                )),
+                child: const Text('Cancel')),
+            TextButton(
+              onPressed: () {
+                //bloc to delete medication
+                _globalBloc.removeMedicine(widget.medicine!);
+                Navigator.popUntil(context, ModalRoute.withName('/'));
+              },
+              child: Text(
+                'OK',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: Colors.redAccent,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ),
           ],
         );
       },
@@ -89,30 +99,35 @@ class _MedicineDetailsState extends State<MedicineDetails> {
 }
 
 class ExtendedSection extends StatelessWidget {
-  const ExtendedSection({super.key});
+  const ExtendedSection({super.key, this.medicine});
+  final Medicine? medicine;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: ListView(
         shrinkWrap: true,
-        children: const [
+        children: [
           ExtendedInfo(
             fieldTitle: 'Medicine Type',
-            fieldInfo: 'Pill',
+            fieldInfo: medicine!.medicineType! == 'None'
+                ? 'Not Specified'
+                : medicine!.medicineType!,
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           ExtendedInfo(
-            fieldTitle: 'Dose Interval',
-            fieldInfo: 'Every 8 hours | 3 times a day',
+            fieldTitle: 'Dosage Interval',
+            fieldInfo:
+                "Every ${medicine!.interval} hours  | ${medicine!.interval == 24 ? "One time per day" : "${(24 / medicine!.interval!).floor()} times a day"} ",
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           ExtendedInfo(
             fieldTitle: 'Start Time',
-            fieldInfo: '02:10',
+            fieldInfo:
+                '${medicine!.startTime![0]}${medicine!.startTime![1]}:${medicine!.startTime![2]}${medicine!.startTime![3]}',
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
         ],
       ),
     );
@@ -120,29 +135,69 @@ class ExtendedSection extends StatelessWidget {
 }
 
 class MainSection extends StatelessWidget {
-  const MainSection({super.key});
+  const MainSection({super.key, this.medicine});
+  final Medicine? medicine;
+
+  Hero makeIcon() {
+    if (medicine!.medicineType == 'Bottle') {
+      return Hero(
+          tag: medicine!.medicineName! + medicine!.medicineType!,
+          child: Image.asset(
+            'lib/assets/icons/medicine.png',
+            height: 80,
+            alignment: Alignment.centerLeft,
+            color: Color(0xFF201E45),
+          ));
+    } else if (medicine!.medicineType == 'Pill') {
+      return Hero(
+          tag: medicine!.medicineName! + medicine!.medicineType!,
+          child: Image.asset(
+            'lib/assets/icons/pill.png',
+            height: 80,
+            alignment: Alignment.centerLeft,
+            color: Color(0xFF201E45),
+          ));
+    } else if (medicine!.medicineType == 'Syringe') {
+      return Hero(
+          tag: medicine!.medicineName! + medicine!.medicineType!,
+          child: Image.asset(
+            'lib/assets/icons/syringe.png',
+            height: 80,
+            alignment: Alignment.centerLeft,
+            color: Color(0xFF201E45),
+          ));
+    }
+    //no medicine type icon selection
+    return Hero(
+      tag: medicine!.medicineName! + medicine!.medicineType!,
+      child: Icon(Icons.error),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Image.asset(
-          'lib/assets/icons/pill.png',
-          height: 80,
-          color: Theme.of(context).primaryColor,
-          alignment: Alignment.centerLeft,
-        ),
+        makeIcon(),
         const SizedBox(width: 2),
-        const Column(
+        Column(
           children: [
-            InfoTab(
-              fieldTitle: 'Medicine Name',
-              fieldInfo: 'Lorem',
+            Hero(
+              tag: medicine!.medicineName!,
+              child: Material(
+                color: Colors.transparent,
+                child: InfoTab(
+                    fieldTitle: 'Medicine Name',
+                    fieldInfo: medicine!.medicineName!),
+              ),
             ),
+            const SizedBox(width: 4),
             InfoTab(
               fieldTitle: 'Dosage',
-              fieldInfo: '500 mg',
+              fieldInfo: medicine!.dosage == 0
+                  ? 'Not Specified'
+                  : "${medicine!.dosage} mg/ml",
             ),
           ],
         )
@@ -160,7 +215,7 @@ class InfoTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 200,
-      height: 80,
+      height: 120,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
