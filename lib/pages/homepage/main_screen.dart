@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:linear_calender/linear_calender.dart';
 import 'package:medicine_tracker/global_bloc.dart';
+import 'package:medicine_tracker/pages/app_view.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../models/medicine.dart';
 import '../../models/medicine_card.dart';
@@ -28,7 +30,7 @@ class MainScreen extends StatelessWidget {
                         Text(
                           'Stay on track with your health ',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 20.sp,
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
@@ -39,8 +41,8 @@ class MainScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 25,
+            SizedBox(
+              height: 2.h,
             ),
             Column(
               children: [
@@ -53,21 +55,21 @@ class MainScreen extends StatelessWidget {
                     debugPrint(
                         "*****************$value***************************");
                   },
-                  height: 80,
-                  itemWidth: 55,
+                  height: 9.h,
+                  itemWidth: 14.w,
                   backgroundColor: Colors.transparent,
                 ),
               ],
             ),
-            const SizedBox(
-              height: 25,
+            SizedBox(
+              height: 2.h,
             ),
             Row(
               children: [
                 Text(
                   'Your total Medications: ',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18.sp,
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
@@ -87,15 +89,15 @@ class MainScreen extends StatelessWidget {
                               .headlineSmall!
                               .copyWith(
                                 color: Theme.of(context).colorScheme.primary,
-                                fontSize: 20,
+                                fontSize: 18.sp,
                               ),
                         ),
                       );
                     }),
               ],
             ),
-            const SizedBox(
-              height: 25,
+            SizedBox(
+              height: 2.h,
             ),
             Flexible(
               child: ListItems(),

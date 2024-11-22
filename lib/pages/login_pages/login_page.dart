@@ -4,7 +4,9 @@ import 'package:medicine_tracker/components/button.dart';
 import 'package:medicine_tracker/components/my_text_field.dart';
 import 'package:medicine_tracker/components/square_tile.dart';
 import 'package:medicine_tracker/assets/constants.dart';
+import 'package:medicine_tracker/pages/app_view.dart';
 import 'package:medicine_tracker/services/auth_service.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -72,28 +74,28 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50),
+                  SizedBox(height: 8.h),
 
                   //logo
-                  const ImageIcon(
+                  ImageIcon(
                     AssetImage('lib/assets/icons/pills.png'),
                     color: AppColors.secondaryColor,
-                    size: 100,
+                    size: 100.px,
                   ),
 
-                  const SizedBox(height: 25),
+                  SizedBox(height: 2.h),
 
                   //welcome Text
-                  const Text(
+                  Text(
                     'Track your Medications!',
                     style: TextStyle(
                       color: AppColors.secondaryColor,
-                      fontSize: 28,
+                      fontSize: 22.sp,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
 
-                  const SizedBox(height: 50),
+                  SizedBox(height: 6.h),
                   //username text field
 
                   MyTextField(
@@ -102,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: false,
                   ),
 
-                  const SizedBox(height: 25),
+                  SizedBox(height: 3.h),
                   //password text field
                   MyTextField(
                     controller: passwordController,
@@ -110,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: true,
                   ),
 
-                  const SizedBox(height: 10),
+                  SizedBox(height: 1.h),
                   //forgot password?
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -121,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                           'Forgot Password?',
                           style: TextStyle(
                             color: Colors.grey[700],
-                            fontSize: 14,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
@@ -129,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 25),
+                  SizedBox(height: 4.h),
 
                   //sign in button
                   MyButton(
@@ -137,11 +139,11 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: signUserIn,
                   ),
 
-                  const SizedBox(height: 50),
+                  SizedBox(height: 4.h),
 
                   //or continue with
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    padding: EdgeInsets.symmetric(horizontal: 2.h),
                     child: Row(
                       children: [
                         Expanded(
@@ -151,12 +153,12 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          padding: EdgeInsets.symmetric(horizontal: 2.h),
                           child: Text(
                             'Or continue with',
                             style: TextStyle(
                               color: Colors.grey[700],
-                              fontSize: 15,
+                              fontSize: 15.sp,
                             ),
                           ),
                         ),
@@ -169,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: 2.h),
 
                   //google
                   Row(
@@ -182,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     ],
                   ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: 2.h),
 
                   //register now
                   Row(
@@ -192,18 +194,18 @@ class _LoginPageState extends State<LoginPage> {
                         "Don't have an account?",
                         style: TextStyle(
                           color: Colors.grey[700],
-                          fontSize: 16,
+                          fontSize: 16.sp,
                         ),
                       ),
-                      const SizedBox(width: 4),
+                      SizedBox(width: 2.w),
                       GestureDetector(
                         onTap: widget.onTap,
-                        child: const Text(
+                        child: Text(
                           "Register Now",
                           style: TextStyle(
                             color: AppColors.secondaryColor,
                             fontWeight: FontWeight.w900,
-                            fontSize: 16,
+                            fontSize: 17.sp,
                           ),
                         ),
                       ),
