@@ -3,6 +3,7 @@ import 'package:medicine_tracker/global_bloc.dart';
 import 'package:medicine_tracker/models/medicine.dart';
 import 'package:medicine_tracker/pages/details/medicine_details.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class MedicineCard extends StatelessWidget {
   const MedicineCard({
@@ -17,7 +18,7 @@ class MedicineCard extends StatelessWidget {
           tag: medicine.medicineName! + medicine.medicineType!,
           child: Image.asset(
             'lib/assets/icons/medicine.png',
-            height: 40,
+            height: 5.h,
             alignment: Alignment.centerLeft,
             color: Color(0xFF201E45),
           ));
@@ -26,7 +27,7 @@ class MedicineCard extends StatelessWidget {
           tag: medicine.medicineName! + medicine.medicineType!,
           child: Image.asset(
             'lib/assets/icons/pill.png',
-            height: 44,
+            height: 5.h,
             alignment: Alignment.centerLeft,
             color: Color(0xFF201E45),
           ));
@@ -35,7 +36,7 @@ class MedicineCard extends StatelessWidget {
           tag: medicine.medicineName! + medicine.medicineType!,
           child: Image.asset(
             'lib/assets/icons/syringe.png',
-            height: 42,
+            height: 5.h,
             alignment: Alignment.centerLeft,
             color: Color(0xFF201E45),
           ));
@@ -74,9 +75,9 @@ class MedicineCard extends StatelessWidget {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        padding: EdgeInsets.symmetric(vertical: 1.h),
         child: Container(
-          height: 100,
+          height: 15.h,
           decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: kElevationToShadow[1],
@@ -88,7 +89,7 @@ class MedicineCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(1.h),
                     child: Container(
                         alignment: Alignment.centerLeft, child: makeIcon()),
                   ),
@@ -97,40 +98,50 @@ class MedicineCard extends StatelessWidget {
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 8, top: 6, bottom: 2),
+                            EdgeInsets.only(left: 2.w, top: 1.h, bottom: 0.5.h),
                         child: Hero(
                           tag: medicine.medicineName!,
-                          child: Text(
-                            medicine.medicineName!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineLarge!
-                                .copyWith(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          child: SizedBox(
+                            width: 50.w,
+                            height: 7.h,
+                            child: Text(
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              medicine.medicineName!,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(
+
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 18.5.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 8),
+                        padding: EdgeInsets.only(left: 2.w,bottom: 0.5.h),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 2),
                             Text(
                               "${medicine!.dosage} mg/ml",
                               overflow: TextOverflow.fade,
-                              style: Theme.of(context).textTheme.titleSmall,
+                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                            SizedBox(height: 2),
                             Text(
                               medicine.interval == 1
                                   ? "Every ${medicine.interval} hour"
-                                  : "${medicine!.interval == 24 ? "One time per day" : "${(24 / medicine!.interval!).floor()} times a day"}",
+                                  : medicine!.interval == 24 ? "One time per day" : "${(24 / medicine!.interval!).floor()} times a day",
                               overflow: TextOverflow.fade,
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
+                            // SizedBox(height: 0.5.h,),
                           ],
                         ),
                       ),
@@ -138,8 +149,6 @@ class MedicineCard extends StatelessWidget {
                   ),
 
                   //checkbox
-
-
                 ],
               ),
             ],

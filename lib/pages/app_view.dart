@@ -34,6 +34,7 @@ class _MyAppViewState extends State<MyAppView> {
               onSurface: Colors.black,
               primary: Color(0xFF201E45),
               secondary: Color(0xFF505258),
+              inversePrimary: Color(0xFF30988F),
               tertiary: Color(0xFFC4ECB0),
               outline: Color(0xFF292938),
             ),
@@ -41,32 +42,33 @@ class _MyAppViewState extends State<MyAppView> {
               backgroundColor: const Color(0xFFE9E9E9),
               iconTheme: IconThemeData(
                 color: Theme.of(context).colorScheme.primary,
-                size: 30,
+                size: 30.px,
               ),
             ),
             textTheme: TextTheme(
               headlineMedium: TextStyle(
-                fontSize: 28,
+                fontSize: 26.sp,
                 color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.w500,
               ),
               headlineSmall: TextStyle(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w800,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              headlineLarge: TextStyle(
                 fontSize: 24.sp,
                 fontWeight: FontWeight.w800,
                 color: Colors.grey[800],
-              ),
-              headlineLarge: TextStyle(
-                fontSize: 20,
-                color: Theme.of(context).colorScheme.primary,
 
               ),
               bodySmall: TextStyle(
-                fontSize: 16,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
                 color: Theme.of(context).colorScheme.primary,
               ),
               titleSmall: TextStyle(
-                fontSize: 18,
+                fontSize: 17.sp,
                 color: Theme.of(context).colorScheme.outline,
               ),
             ),

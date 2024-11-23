@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:medicine_tracker/models/medicine_card.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../components/button.dart';
 
@@ -24,31 +26,32 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(),
       body: ListView(
         children: [
-          const SizedBox(height: 50),
+          SizedBox(height: 10.h),
           //Profile Pic
           Container(
-            width: 100,
-            height: 100,
-            decoration: const BoxDecoration(
+            width: 14.w,
+            height: 14.h,
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.greenAccent,
+              color: Theme.of(context).colorScheme.inversePrimary,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.person,
-              size: 72,
+              color: Theme.of(context).colorScheme.surface,
+              size: 80.px,
             ),
           ),
-          const SizedBox(height: 25),
+          SizedBox(height: 2.h),
           //User email
           Text(
             currentUser.email!,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
-              fontSize: 25,
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+             color:  Theme.of(context).colorScheme.primary,
             ),
-          ),
-          const SizedBox(height: 300),
+            ),
+
+          SizedBox(height: 20.h),
 
           //Logout
 
@@ -56,7 +59,7 @@ class ProfilePage extends StatelessWidget {
             text: "Log Out",
             onTap: signUserOut,
           ),
-          const SizedBox(height: 25)
+          SizedBox(height: 5.h)
         ],
       ),
     );

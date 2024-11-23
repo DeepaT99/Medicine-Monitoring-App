@@ -4,6 +4,7 @@ import 'package:medicine_tracker/components/button.dart';
 import 'package:medicine_tracker/components/my_text_field.dart';
 import 'package:medicine_tracker/components/square_tile.dart';
 import 'package:medicine_tracker/assets/constants.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../services/auth_service.dart';
 
@@ -82,28 +83,28 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 25),
+                  SizedBox(height: 4.h),
 
                   //logo
-                  const ImageIcon(
+                  ImageIcon(
                     AssetImage('lib/assets/icons/pills.png'),
                     color: AppColors.secondaryColor,
-                    size: 50,
+                    size: 60.px,
                   ),
 
-                  const SizedBox(height: 25),
+                  SizedBox(height: 4.h),
 
                   //create account Text
-                  const Text(
+                  Text(
                     "Let's create your account!",
                     style: TextStyle(
                       color: AppColors.secondaryColor,
-                      fontSize: 28,
+                      fontSize: 21.sp,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
 
-                  const SizedBox(height: 50),
+                  SizedBox(height: 6.h),
                   //username text field
 
                   MyTextField(
@@ -112,14 +113,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     obscureText: false,
                   ),
 
-                  const SizedBox(height: 25),
+                  SizedBox(height: 2.h),
                   //password text field
                   MyTextField(
                     controller: passwordController,
                     hintText: 'Password',
                     obscureText: true,
                   ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: 2.h),
                   //password text field
                   MyTextField(
                     controller: confirmPasswordController,
@@ -129,7 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
 
-                  const SizedBox(height: 25),
+                  SizedBox(height: 4.h),
 
                   //sign in button
                   MyButton(
@@ -137,11 +138,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     onTap: signUserUp,
                   ),
 
-                  const SizedBox(height: 50),
+                  SizedBox(height: 4.h),
 
                   //or continue with
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    padding: EdgeInsets.symmetric(horizontal: 2.h),
                     child: Row(
                       children: [
                         Expanded(
@@ -156,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             'Or continue with',
                             style: TextStyle(
                               color: Colors.grey[700],
-                              fontSize: 15,
+                              fontSize: 16.sp,
                             ),
                           ),
                         ),
@@ -169,7 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: 2.h),
 
                   //google
                   Row(
@@ -180,12 +181,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           onTap: () => AuthService().signInWithGoogle(),
                           imagePath: 'lib/assets/icons/google.png'),
 
-                      const SizedBox(width: 25),
+                      SizedBox(width: 2.w),
                       //email
 
                     ],
                   ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: 2.h),
 
                   //register now
                   Row(
@@ -195,18 +196,18 @@ class _RegisterPageState extends State<RegisterPage> {
                         "Already have an account?",
                         style: TextStyle(
                           color: Colors.grey[700],
-                          fontSize: 16,
+                          fontSize: 16.sp,
                         ),
                       ),
-                      const SizedBox(width: 4),
+                      SizedBox(width: 2.w),
                       GestureDetector(
                         onTap: widget.onTap,
-                        child: const Text(
+                        child: Text(
                           "Login Now",
                           style: TextStyle(
                             color: AppColors.secondaryColor,
                             fontWeight: FontWeight.w900,
-                            fontSize: 16,
+                            fontSize: 17.sp,
                           ),
                         ),
                       ),

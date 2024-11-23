@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medicine_tracker/global_bloc.dart';
 import 'package:medicine_tracker/models/medicine.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class MedicineDetails extends StatefulWidget {
   const MedicineDetails({this.medicine, super.key});
@@ -12,25 +13,30 @@ class MedicineDetails extends StatefulWidget {
 }
 
 class _MedicineDetailsState extends State<MedicineDetails> {
-
   @override
   Widget build(BuildContext context) {
     final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Details'),
+        title: Text(
+          'Medicine Details',
+          style: Theme.of(context)
+              .textTheme
+              .headlineSmall!
+              .copyWith(fontWeight: FontWeight.w500),
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(1.h),
         child: Column(
           children: [
             MainSection(medicine: widget.medicine),
             ExtendedSection(medicine: widget.medicine),
             const Spacer(),
             Padding(
-              padding: const EdgeInsets.only(left: 40, right: 40, bottom: 40),
+              padding: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 6.h),
               child: SizedBox(
-                height: 70,
+                height: 7.h,
                 child: TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary,
@@ -38,10 +44,10 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                   ),
                   child: Center(
                     child: Text(
-                      'Delete',
+                      'Remove',
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             color: Theme.of(context).colorScheme.surface,
-                            fontSize: 20,
+                            fontSize: 21.sp,
                           ),
                     ),
                   ),
@@ -62,21 +68,28 @@ class _MedicineDetailsState extends State<MedicineDetails> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.white,
-          contentPadding: const EdgeInsets.only(top: 2),
-          title: Text('Delete this Medication?',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  )),
+          backgroundColor: Colors.redAccent,
+          contentPadding: EdgeInsets.all(2.h),
+          title: Text(
+            'Delete this Medication?',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+          ),
           actions: [
             TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('Cancel')),
+                child: Text(
+                  'Cancel',
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                )),
             TextButton(
               onPressed: () {
                 //bloc to delete medication
@@ -84,11 +97,10 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                 Navigator.popUntil(context, ModalRoute.withName('/'));
               },
               child: Text(
-                'OK',
+                'Yes',
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Colors.redAccent,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 18.sp),
               ),
             ),
           ],
@@ -105,7 +117,7 @@ class ExtendedSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(2.h),
       child: ListView(
         shrinkWrap: true,
         children: [
@@ -115,19 +127,19 @@ class ExtendedSection extends StatelessWidget {
                 ? 'Not Specified'
                 : medicine!.medicineType!,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 1.h),
           ExtendedInfo(
             fieldTitle: 'Dosage Interval',
             fieldInfo:
                 "Every ${medicine!.interval} hours  | ${medicine!.interval == 24 ? "One time per day" : "${(24 / medicine!.interval!).floor()} times a day"} ",
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 1.h),
           ExtendedInfo(
             fieldTitle: 'Start Time',
             fieldInfo:
                 '${medicine!.startTime![0]}${medicine!.startTime![1]}:${medicine!.startTime![2]}${medicine!.startTime![3]}',
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 1.h),
         ],
       ),
     );
@@ -144,7 +156,7 @@ class MainSection extends StatelessWidget {
           tag: medicine!.medicineName! + medicine!.medicineType!,
           child: Image.asset(
             'lib/assets/icons/medicine.png',
-            height: 80,
+            height: 8.h,
             alignment: Alignment.centerLeft,
             color: Color(0xFF201E45),
           ));
@@ -153,7 +165,7 @@ class MainSection extends StatelessWidget {
           tag: medicine!.medicineName! + medicine!.medicineType!,
           child: Image.asset(
             'lib/assets/icons/pill.png',
-            height: 80,
+            height: 8.h,
             alignment: Alignment.centerLeft,
             color: Color(0xFF201E45),
           ));
@@ -162,7 +174,7 @@ class MainSection extends StatelessWidget {
           tag: medicine!.medicineName! + medicine!.medicineType!,
           child: Image.asset(
             'lib/assets/icons/syringe.png',
-            height: 80,
+            height: 8.h,
             alignment: Alignment.centerLeft,
             color: Color(0xFF201E45),
           ));
@@ -180,7 +192,7 @@ class MainSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         makeIcon(),
-        const SizedBox(width: 2),
+        SizedBox(width: 1.w),
         Column(
           children: [
             Hero(
@@ -192,7 +204,7 @@ class MainSection extends StatelessWidget {
                     fieldInfo: medicine!.medicineName!),
               ),
             ),
-            const SizedBox(width: 4),
+            SizedBox(width: 1.w),
             InfoTab(
               fieldTitle: 'Dosage',
               fieldInfo: medicine!.dosage == 0
@@ -214,8 +226,8 @@ class InfoTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 200,
-      height: 120,
+      width: 60.w,
+      height: 14.h,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,12 +236,15 @@ class InfoTab extends StatelessWidget {
               fieldTitle,
               style: Theme.of(context).textTheme.titleSmall,
             ),
-            const SizedBox(
-              height: 2,
+            SizedBox(
+              height: 0.5.h
             ),
             Text(
               fieldInfo,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                fontSize: 20.sp,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             )
           ],
         ),
@@ -247,12 +262,12 @@ class ExtendedInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 1.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 4),
+            padding: EdgeInsets.only(bottom: 0.5.h),
             child: Text(
               fieldTitle,
               style: Theme.of(context).textTheme.titleSmall,
@@ -261,6 +276,7 @@ class ExtendedInfo extends StatelessWidget {
           Text(
             fieldInfo,
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontSize: 18.sp,
                   color: Theme.of(context).colorScheme.primary,
                 ),
           )
