@@ -20,7 +20,7 @@ class MedicineCard extends StatelessWidget {
             'lib/assets/icons/medicine.png',
             height: 5.h,
             alignment: Alignment.centerLeft,
-            color: Color(0xFF201E45),
+            color: const Color(0xFF201E45),
           ));
     } else if (medicine.medicineType == 'Pill') {
       return Hero(
@@ -29,7 +29,7 @@ class MedicineCard extends StatelessWidget {
             'lib/assets/icons/pill.png',
             height: 5.h,
             alignment: Alignment.centerLeft,
-            color: Color(0xFF201E45),
+            color: const Color(0xFF201E45),
           ));
     } else if (medicine.medicineType == 'Syringe') {
       return Hero(
@@ -38,13 +38,13 @@ class MedicineCard extends StatelessWidget {
             'lib/assets/icons/syringe.png',
             height: 5.h,
             alignment: Alignment.centerLeft,
-            color: Color(0xFF201E45),
+            color: const Color(0xFF201E45),
           ));
     }
     //no medicine type icon selection
     return Hero(
       tag: medicine.medicineName! + medicine.medicineType!,
-      child: Icon(Icons.error),
+      child: const Icon(Icons.error),
     );
   }
 

@@ -60,12 +60,10 @@ class _AddNewState extends State<AddNew> {
         title: Text(
           'Add New Medication',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
-            fontWeight: FontWeight.w700,
+          style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
-      ),
+
       body: SingleChildScrollView(
         child: Provider<NewEntryBloc>.value(
           value: _newEntryBloc,
@@ -343,7 +341,7 @@ class _AddNewState extends State<AddNew> {
         'It\'s time to take your ${medicine.medicineType!.toLowerCase()}!',
         tz.TZDateTime.now(tz.local)
             .add(Duration(hours: notificationHour - DateTime.now().hour, minutes: minute - DateTime.now().minute)),
-        NotificationDetails(
+        const NotificationDetails(
           android: AndroidNotificationDetails(
             'repeatDailyAtTime channel id',
             'Repeat Daily Notifications',

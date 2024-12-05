@@ -16,7 +16,7 @@ class MainScreen extends StatelessWidget {
     final GlobalBloc globalBloc = Provider.of<GlobalBloc>(context);
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
+        padding: EdgeInsets.all(4.w),
         child: Column(
           children: [
             Row(
@@ -29,11 +29,14 @@ class MainScreen extends StatelessWidget {
                       children: [
                         Text(
                           'Stay on track with your health ',
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .inversePrimary,
+                              ),
                         ),
                       ],
                     ),
@@ -99,7 +102,7 @@ class MainScreen extends StatelessWidget {
             SizedBox(
               height: 2.h,
             ),
-            Flexible(
+            const Flexible(
               child: ListItems(),
             )
           ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medicine_tracker/pages/add/add_new.dart';
 import 'package:medicine_tracker/pages/homepage/main_screen.dart';
+import 'package:sizer/sizer.dart';
 
 import '../profile/profile.dart';
 
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(
                     Icons.home,
                     color: Theme.of(context).colorScheme.primary,
-                    size: 30,
+                    size: 30.px,
                   ),
                   label: 'Home',
                 ),
@@ -42,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(
                     Icons.account_circle,
                     color: Theme.of(context).colorScheme.primary,
-                    size: 30,
+                    size: 30.px,
                   ),
                   label: 'Profile',
                 ),
@@ -50,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           onPressed: () {
             Navigator.push(
               context,
@@ -58,8 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           },
-          child: const Icon(Icons.add,
-          size: 30,
+          child: Icon(Icons.add,
+          size: 35.px,
           ),
         ),
         body: index == 0 ? const MainScreen() : ProfilePage());

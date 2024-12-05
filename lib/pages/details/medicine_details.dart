@@ -32,22 +32,22 @@ class _MedicineDetailsState extends State<MedicineDetails> {
           children: [
             MainSection(medicine: widget.medicine),
             ExtendedSection(medicine: widget.medicine),
-            const Spacer(),
+            Spacer(),
             Padding(
               padding: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 6.h),
               child: SizedBox(
                 height: 7.h,
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    backgroundColor: Colors.red[400],
                     shape: const StadiumBorder(),
                   ),
                   child: Center(
                     child: Text(
                       'Remove',
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            color: Theme.of(context).colorScheme.surface,
-                            fontSize: 21.sp,
+                            color: Colors.white,
+                            fontSize: 20.sp,
                           ),
                     ),
                   ),
@@ -68,7 +68,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.white,
           contentPadding: EdgeInsets.all(2.h),
           title: Text(
             'Delete this Medication?',
@@ -88,7 +88,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                   'Cancel',
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      color: Theme.of(context).colorScheme.primary),
                 )),
             TextButton(
               onPressed: () {
@@ -99,7 +99,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
               child: Text(
                 'Yes',
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Colors.redAccent,
                     fontSize: 18.sp),
               ),
             ),
