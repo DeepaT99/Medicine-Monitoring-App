@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medicine_tracker/assets/constants.dart';
 import 'package:medicine_tracker/global_bloc.dart';
 import 'package:medicine_tracker/models/medicine.dart';
 import 'package:medicine_tracker/pages/details/medicine_details.dart';
@@ -9,18 +10,18 @@ class MedicineCard extends StatefulWidget {
   MedicineCard({
     super.key,
     required this.medicine,
-    this.onChanged,
+
   });
   final Medicine medicine;
 
-  final Function(bool?)? onChanged;
 
   @override
   State<MedicineCard> createState() => _MedicineCardState();
 }
 
 class _MedicineCardState extends State<MedicineCard> {
-  bool medicineTaken = false;
+
+
   Hero makeIcon() {
     if (widget.medicine.medicineType == 'Bottle') {
       return Hero(
@@ -88,7 +89,7 @@ class _MedicineCardState extends State<MedicineCard> {
         child: Container(
           height: 15.h,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.primaryColor,
             boxShadow: kElevationToShadow[1],
             borderRadius: BorderRadius.circular(8),
           ),
@@ -162,15 +163,7 @@ class _MedicineCardState extends State<MedicineCard> {
                   ),
 
                   //checkbox
-                  Padding(
-                    padding: EdgeInsets.all(2.h),
-                    child: Checkbox(
-                      value: medicineTaken,
-                      onChanged: (value) {
-                        setState(() => medicineTaken = value!);
-                      },
-                    ),
-                  )
+
                 ],
               ),
             ],

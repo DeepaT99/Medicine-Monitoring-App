@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medicine_tracker/assets/constants.dart';
 import 'package:medicine_tracker/global_bloc.dart';
 import 'package:medicine_tracker/models/medicine.dart';
 import 'package:provider/provider.dart';
@@ -18,12 +19,13 @@ class _MedicineDetailsState extends State<MedicineDetails> {
     final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: AppColors.primaryColor,
+        size: 28.px),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(
           'Medicine Details',
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall!
-              .copyWith(fontWeight: FontWeight.w500),
+          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+               color: AppColors.primaryColor),
         ),
       ),
       body: Padding(
@@ -98,9 +100,10 @@ class _MedicineDetailsState extends State<MedicineDetails> {
               },
               child: Text(
                 'Yes',
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: Colors.redAccent,
-                    fontSize: 18.sp),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(color: Colors.redAccent, fontSize: 18.sp),
               ),
             ),
           ],
@@ -236,15 +239,13 @@ class InfoTab extends StatelessWidget {
               fieldTitle,
               style: Theme.of(context).textTheme.titleSmall,
             ),
-            SizedBox(
-              height: 0.5.h
-            ),
+            SizedBox(height: 0.5.h),
             Text(
               fieldInfo,
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                fontSize: 20.sp,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+                    fontSize: 20.sp,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
             )
           ],
         ),

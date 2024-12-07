@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linear_calender/linear_calender.dart';
+import 'package:intl/intl.dart';
+import 'package:medicine_tracker/assets/constants.dart';
 import 'package:medicine_tracker/global_bloc.dart';
 import 'package:medicine_tracker/pages/app_view.dart';
 import 'package:provider/provider.dart';
@@ -14,36 +15,51 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GlobalBloc globalBloc = Provider.of<GlobalBloc>(context);
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.all(4.w),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Never miss your medications!',
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          color: AppColors.primaryColor,
+                      fontSize: 20.sp
+                        ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 5.w),
+                child: Container(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    DateFormat.yMMMMd().format(DateTime.now()),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(
+                        fontSize: 16.sp,
+                        color: AppColors.primaryColor),
+                  ),
+                ),
+              ),
+              SizedBox(height: 0.4.h,)
+            ],
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(1.h),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Stay on track with your health ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .inversePrimary,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
+
             SizedBox(
               height: 2.h,
             ),
@@ -116,9 +132,7 @@ class ListItems extends StatelessWidget {
   const ListItems({super.key});
 
   //checkbox was ticked
-  void checkBoxChanged(int index){
-
-  }
+  void checkBoxChanged(int index) {}
   @override
   Widget build(BuildContext context) {
     final GlobalBloc globalBloc = Provider.of<GlobalBloc>(context);
@@ -143,7 +157,6 @@ class ListItems extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               return MedicineCard(
                 medicine: snapshot.data![index],
-
               );
             },
           );

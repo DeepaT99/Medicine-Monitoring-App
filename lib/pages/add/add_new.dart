@@ -10,6 +10,7 @@ import 'package:medicine_tracker/pages/homepage/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../assets/constants.dart';
 import '../../models/convert_time.dart';
 import '../../models/medicine.dart';
 import '../../models/medicine_type.dart';
@@ -57,10 +58,15 @@ class _AddNewState extends State<AddNew> {
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: AppColors.primaryColor,
+            size: 30.px,),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(
           'Add New Medication',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headlineSmall,
+          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+              color: AppColors.primaryColor,
+          ),
           ),
         ),
 

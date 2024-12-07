@@ -24,12 +24,15 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: (value) {
                 setState(() {
                   index = value;
-                });
+                },
+                );
               },
+
               backgroundColor: const Color(0xFFF9FAF5),
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              elevation: 3,
+
+              elevation: 2,
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(
