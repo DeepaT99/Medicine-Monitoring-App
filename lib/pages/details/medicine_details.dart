@@ -189,6 +189,7 @@ class MainSection extends StatelessWidget {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -212,8 +213,9 @@ class MainSection extends StatelessWidget {
               fieldTitle: 'Dosage',
               fieldInfo: medicine!.dosage == 0
                   ? 'Not Specified'
-                  : "${medicine!.dosage} mg/ml",
+                  : "${medicine!.dosage}",
             ),
+
           ],
         )
       ],

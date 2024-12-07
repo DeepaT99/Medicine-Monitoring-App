@@ -1,3 +1,4 @@
+import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medicine_tracker/assets/constants.dart';
@@ -29,9 +30,7 @@ class MainScreen extends StatelessWidget {
                   child: Text(
                     'Never miss your medications!',
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: AppColors.primaryColor,
-                      fontSize: 20.sp
-                        ),
+                        color: AppColors.primaryColor, fontSize: 20.sp),
                   ),
                 ),
               ),
@@ -41,16 +40,14 @@ class MainScreen extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: Text(
                     DateFormat.yMMMMd().format(DateTime.now()),
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(
-                        fontSize: 16.sp,
-                        color: AppColors.primaryColor),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        fontSize: 16.sp, color: AppColors.primaryColor),
                   ),
                 ),
               ),
-              SizedBox(height: 0.4.h,)
+              SizedBox(
+                height: 0.4.h,
+              )
             ],
           ),
         ),
@@ -59,27 +56,37 @@ class MainScreen extends StatelessWidget {
         padding: EdgeInsets.all(1.h),
         child: Column(
           children: [
+            //calender
+            Container(
+              margin: EdgeInsets.only(top: 0.5.h, left: 0.5.w),
+              color: AppColors.primaryColor,
+              child: DatePicker(
+                DateTime.now(),
+                height: 10.h,
+                width: 12.5.w,
+                initialSelectedDate: DateTime.now(),
+                selectionColor: Theme.of(context).colorScheme.primary,
+                selectedTextColor: AppColors.primaryAccent,
+                dateTextStyle: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+                dayTextStyle: TextStyle(
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+                monthTextStyle: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
 
-            SizedBox(
-              height: 2.h,
+
+              ),
             ),
-            Column(
-              children: [
-                // LinearCalendar(
-                //   selectedColor: Theme.of(context).colorScheme.primary,
-                //   unselectedColor: Colors.white,
-                //   monthVisibility: false,
-                //   selectedBorderColor: Theme.of(context).colorScheme.primary,
-                //   onChanged: (DateTime value) {
-                //     debugPrint(
-                //         "*****************$value***************************");
-                //   },
-                //   height: 9.h,
-                //   itemWidth: 14.w,
-                //   backgroundColor: Colors.transparent,
-                // ),
-              ],
-            ),
+
             SizedBox(
               height: 2.h,
             ),
