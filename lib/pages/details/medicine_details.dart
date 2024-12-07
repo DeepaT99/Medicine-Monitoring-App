@@ -213,7 +213,7 @@ class MainSection extends StatelessWidget {
               fieldTitle: 'Dosage',
               fieldInfo: medicine!.dosage == 0
                   ? 'Not Specified'
-                  : "${medicine!.dosage}",
+                  : "${medicine!.dosage}  mg / ml",
             ),
 
           ],
