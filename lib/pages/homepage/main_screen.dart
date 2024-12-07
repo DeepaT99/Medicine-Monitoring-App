@@ -49,19 +49,19 @@ class MainScreen extends StatelessWidget {
             ),
             Column(
               children: [
-                LinearCalendar(
-                  selectedColor: Theme.of(context).colorScheme.primary,
-                  unselectedColor: Colors.white,
-                  monthVisibility: false,
-                  selectedBorderColor: Theme.of(context).colorScheme.primary,
-                  onChanged: (DateTime value) {
-                    debugPrint(
-                        "*****************$value***************************");
-                  },
-                  height: 9.h,
-                  itemWidth: 14.w,
-                  backgroundColor: Colors.transparent,
-                ),
+                // LinearCalendar(
+                //   selectedColor: Theme.of(context).colorScheme.primary,
+                //   unselectedColor: Colors.white,
+                //   monthVisibility: false,
+                //   selectedBorderColor: Theme.of(context).colorScheme.primary,
+                //   onChanged: (DateTime value) {
+                //     debugPrint(
+                //         "*****************$value***************************");
+                //   },
+                //   height: 9.h,
+                //   itemWidth: 14.w,
+                //   backgroundColor: Colors.transparent,
+                // ),
               ],
             ),
             SizedBox(
@@ -72,7 +72,7 @@ class MainScreen extends StatelessWidget {
                 Text(
                   'Your total Medications: ',
                   style: TextStyle(
-                    fontSize: 18.sp,
+                    fontSize: 20.sp,
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
@@ -92,7 +92,7 @@ class MainScreen extends StatelessWidget {
                               .headlineSmall!
                               .copyWith(
                                 color: Theme.of(context).colorScheme.primary,
-                                fontSize: 18.sp,
+                                fontSize: 20.sp,
                               ),
                         ),
                       );
@@ -116,6 +116,9 @@ class ListItems extends StatelessWidget {
   const ListItems({super.key});
 
   //checkbox was ticked
+  void checkBoxChanged(int index){
+
+  }
   @override
   Widget build(BuildContext context) {
     final GlobalBloc globalBloc = Provider.of<GlobalBloc>(context);
@@ -137,9 +140,10 @@ class ListItems extends StatelessWidget {
           return ListView.builder(
             scrollDirection: Axis.vertical,
             itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
+            itemBuilder: (BuildContext context, index) {
               return MedicineCard(
                 medicine: snapshot.data![index],
+
               );
             },
           );

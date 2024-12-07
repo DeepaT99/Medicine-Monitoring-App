@@ -5,35 +5,44 @@ import 'package:medicine_tracker/pages/details/medicine_details.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class MedicineCard extends StatelessWidget {
-  const MedicineCard({
+class MedicineCard extends StatefulWidget {
+  MedicineCard({
     super.key,
     required this.medicine,
+    this.onChanged,
   });
   final Medicine medicine;
 
+  final Function(bool?)? onChanged;
+
+  @override
+  State<MedicineCard> createState() => _MedicineCardState();
+}
+
+class _MedicineCardState extends State<MedicineCard> {
+  bool medicineTaken = false;
   Hero makeIcon() {
-    if (medicine.medicineType == 'Bottle') {
+    if (widget.medicine.medicineType == 'Bottle') {
       return Hero(
-          tag: medicine.medicineName! + medicine.medicineType!,
+          tag: widget.medicine.medicineName! + widget.medicine.medicineType!,
           child: Image.asset(
             'lib/assets/icons/medicine.png',
             height: 5.h,
             alignment: Alignment.centerLeft,
             color: const Color(0xFF201E45),
           ));
-    } else if (medicine.medicineType == 'Pill') {
+    } else if (widget.medicine.medicineType == 'Pill') {
       return Hero(
-          tag: medicine.medicineName! + medicine.medicineType!,
+          tag: widget.medicine.medicineName! + widget.medicine.medicineType!,
           child: Image.asset(
             'lib/assets/icons/pill.png',
             height: 5.h,
             alignment: Alignment.centerLeft,
             color: const Color(0xFF201E45),
           ));
-    } else if (medicine.medicineType == 'Syringe') {
+    } else if (widget.medicine.medicineType == 'Syringe') {
       return Hero(
-          tag: medicine.medicineName! + medicine.medicineType!,
+          tag: widget.medicine.medicineName! + widget.medicine.medicineType!,
           child: Image.asset(
             'lib/assets/icons/syringe.png',
             height: 5.h,
@@ -43,7 +52,7 @@ class MedicineCard extends StatelessWidget {
     }
     //no medicine type icon selection
     return Hero(
-      tag: medicine.medicineName! + medicine.medicineType!,
+      tag: widget.medicine.medicineName! + widget.medicine.medicineType!,
       child: const Icon(Icons.error),
     );
   }
@@ -65,7 +74,7 @@ class MedicineCard extends StatelessWidget {
                 builder: (context, Widget? child) {
                   return Opacity(
                     opacity: animation.value,
-                    child: MedicineDetails(medicine: medicine),
+                    child: MedicineDetails(medicine: widget.medicine),
                   );
                 },
               );
@@ -100,19 +109,18 @@ class MedicineCard extends StatelessWidget {
                         padding:
                             EdgeInsets.only(left: 2.w, top: 1.h, bottom: 0.5.h),
                         child: Hero(
-                          tag: medicine.medicineName!,
+                          tag: widget.medicine.medicineName!,
                           child: SizedBox(
                             width: 50.w,
                             height: 7.h,
                             child: Text(
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              medicine.medicineName!,
+                              widget.medicine.medicineName!,
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
                                   .copyWith(
-
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 18.5.sp,
                                     fontWeight: FontWeight.bold,
@@ -122,22 +130,27 @@ class MedicineCard extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 2.w,bottom: 0.5.h),
+                        padding: EdgeInsets.only(left: 2.w, bottom: 0.5.h),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${medicine!.dosage} mg/ml",
+                              "${widget.medicine!.dosage} mg/ml",
                               overflow: TextOverflow.fade,
-                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                             ),
                             Text(
-                              medicine.interval == 1
-                                  ? "Every ${medicine.interval} hour"
-                                  : medicine!.interval == 24 ? "One time per day" : "${(24 / medicine!.interval!).floor()} times a day",
+                              widget.medicine.interval == 1
+                                  ? "Every ${widget.medicine.interval} hour"
+                                  : widget.medicine!.interval == 24
+                                      ? "One time per day"
+                                      : "${(24 / widget.medicine!.interval!).floor()} times a day",
                               overflow: TextOverflow.fade,
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
@@ -149,6 +162,15 @@ class MedicineCard extends StatelessWidget {
                   ),
 
                   //checkbox
+                  Padding(
+                    padding: EdgeInsets.all(2.h),
+                    child: Checkbox(
+                      value: medicineTaken,
+                      onChanged: (value) {
+                        setState(() => medicineTaken = value!);
+                      },
+                    ),
+                  )
                 ],
               ),
             ],

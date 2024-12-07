@@ -8,6 +8,8 @@ import 'package:medicine_tracker/pages/app_view.dart';
 import 'package:medicine_tracker/services/auth_service.dart';
 import 'package:sizer/sizer.dart';
 
+import 'forgot_password_page.dart';
+
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
   const LoginPage({super.key, required this.onTap});
@@ -72,9 +74,10 @@ class _LoginPageState extends State<LoginPage> {
           child: Center(
             child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 6.h),
 
                   //logo
                   ImageIcon(
@@ -111,27 +114,36 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: 'Password',
                     obscureText: true,
                   ),
-
                   SizedBox(height: 1.h),
-                  //forgot password?
+
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 4.w, vertical: 0.5.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            color: Colors.grey[700],
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.normal,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context){
+                              return ForgotPasswordPage();
+                            },),);
+                          },
+                          child: Text(
+                            'Forgot Password?',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                  fontSize: 16.sp,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                           ),
                         ),
                       ],
                     ),
                   ),
 
-                  SizedBox(height: 4.h),
+                  SizedBox(height: 3.h),
 
                   //sign in button
                   MyButton(
@@ -180,8 +192,8 @@ class _LoginPageState extends State<LoginPage> {
                       //google
                       SquareTile(
                         onTap: () => AuthService().signInWithGoogle(),
-                        imagePath: 'lib/assets/icons/google.png',),
-
+                        imagePath: 'lib/assets/icons/google.png',
+                      ),
                     ],
                   ),
                   SizedBox(height: 2.h),
