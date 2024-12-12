@@ -161,7 +161,7 @@ class ListItems extends StatelessWidget {
           return ListView.builder(
             scrollDirection: Axis.vertical,
             itemCount: snapshot.data!.length,
-            itemBuilder: (BuildContext context, index) {
+            itemBuilder: (context, index) {
               return MedicineCard(
                 medicine: snapshot.data![index],
               );
