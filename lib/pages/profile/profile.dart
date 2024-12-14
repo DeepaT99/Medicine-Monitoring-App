@@ -1,17 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medicine_tracker/models/medicine_card.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../assets/constants.dart';
 import '../../components/button.dart';
+import '../../global_bloc.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
   final currentUser = FirebaseAuth.instance.currentUser!;
 
   //sign User out
-  void signUserOut() {
+  void signUserOut(BuildContext context) {
+    final GlobalBloc globalBloc = Provider.of<GlobalBloc>(context,listen: false);
+    globalBloc.clearList();
     FirebaseAuth.instance.signOut();
+    //Navigator.pop(context);
   }
   // actions: [
   // IconButton(
@@ -23,7 +29,9 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(
+      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      // ),
       body: ListView(
         children: [
           SizedBox(height: 10.h),
@@ -47,9 +55,9 @@ class ProfilePage extends StatelessWidget {
             currentUser.email!,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-             color:  Theme.of(context).colorScheme.primary,
+              color:  Theme.of(context).colorScheme.primary,
             ),
-            ),
+          ),
 
           SizedBox(height: 20.h),
 
@@ -57,7 +65,7 @@ class ProfilePage extends StatelessWidget {
 
           MyButton(
             text: "Log Out",
-            onTap: signUserOut,
+            onTap:(){signUserOut(context);},
           ),
           SizedBox(height: 5.h)
         ],
