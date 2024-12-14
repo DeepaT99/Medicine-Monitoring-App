@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class MedicineCard extends StatefulWidget {
-  MedicineCard({
+  const MedicineCard({
     super.key,
     required this.medicine,
 
