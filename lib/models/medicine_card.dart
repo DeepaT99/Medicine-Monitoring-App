@@ -113,7 +113,7 @@ class _MedicineCardState extends State<MedicineCard> {
                           tag: widget.medicine.medicineName!,
                           child: SizedBox(
                             width: 50.w,
-                            height: 7.h,
+                            height: 6.h,
                             child: Text(
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -123,7 +123,7 @@ class _MedicineCardState extends State<MedicineCard> {
                                   .headlineSmall!
                                   .copyWith(
                                     color: Theme.of(context).primaryColor,
-                                    fontSize: 18.5.sp,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
